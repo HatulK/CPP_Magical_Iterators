@@ -156,6 +156,6 @@ int MagicalContainer::inheritanceIterator::operator*() {
     return 0;
 }
 
-bool MagicalContainer::inheritanceIterator::operator==(const MagicalContainer::inheritanceIterator &other) {
+bool MagicalContainer::inheritanceIterator::operator==(const MagicalContainer::inheritanceIterator &other)const {
     return false;
 }

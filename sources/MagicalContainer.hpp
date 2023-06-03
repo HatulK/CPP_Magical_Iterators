@@ -41,7 +41,7 @@ namespace ariel {
         class inheritanceIterator {
         public:
 
-            bool operator==(const inheritanceIterator &other);
+            bool operator==(const inheritanceIterator &other) const;
 
             bool operator!=(const inheritanceIterator &other) const;
 
