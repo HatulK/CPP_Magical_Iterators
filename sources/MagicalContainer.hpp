@@ -11,6 +11,8 @@
 
 namespace ariel {
     class MagicalContainer {
+        std::vector<int> ascendingContainer;
+        std::vector<int *> primeContainer;
 
     public:
         void addElement(int num);
@@ -19,99 +21,179 @@ namespace ariel {
 
         size_t size() const;
 
+        void updateAllVectors();
+
         //Constructor
-        MagicalContainer();
+        MagicalContainer() = default;
 
         //Destructor
-        ~MagicalContainer();
+        ~MagicalContainer() = default;
 
         //Copy constructor
-        MagicalContainer(const MagicalContainer &other);
+        MagicalContainer(const MagicalContainer &other) = default;
 
         //Move constructor
-        MagicalContainer(MagicalContainer &&other);
+        MagicalContainer(MagicalContainer &&other) noexcept = default;
 
-    private:
-        std::vector<int> primeContainer;
-        std::vector<int> ascendingContainer;
-        std::vector<int> sideCrossContainer;
+        MagicalContainer &operator=(MagicalContainer &&other) noexcept = default;
 
-        //I've written public 2 times in order to split between magical container functions and the rest of the code.
+        //== operator
+        bool operator==(const MagicalContainer &other) const;
+
+        // != operator
+        bool operator!=(const MagicalContainer &other) const;
+
+        class inheritanceIterator;
+
+        class AscendingIterator;
+
+        class SideCrossIterator;
+
+        class PrimeIterator;
+    };
+
+    class MagicalContainer::inheritanceIterator {
     public:
-        class inheritanceIterator {
-        public:
 
-            bool operator==(const inheritanceIterator &other) const;
+        explicit inheritanceIterator(MagicalContainer &magicalContainer);
 
-            bool operator!=(const inheritanceIterator &other) const;
+        inheritanceIterator(const inheritanceIterator &other);
 
-            bool operator>(const inheritanceIterator &other) const;
+        inheritanceIterator() = default;
 
-            bool operator<(const inheritanceIterator &other) const;
+        ~inheritanceIterator() = default;
 
-            int operator*();
+        inheritanceIterator(inheritanceIterator &&other) noexcept = default;
 
-        private:
-            int *num{};
-        };
+        inheritanceIterator &operator=(inheritanceIterator &&other) noexcept = default;
 
-        class AscendingIterator : public inheritanceIterator {
-        public:
-            AscendingIterator();
+        inheritanceIterator &operator=(const inheritanceIterator &other) = default;
 
-            ~AscendingIterator();
+        virtual inheritanceIterator &operator++() = 0;
 
-            explicit AscendingIterator(MagicalContainer &container);
+        virtual int operator*() const;
 
-            AscendingIterator(const AscendingIterator &other);
+        bool operator==(const inheritanceIterator &other);
 
-            AscendingIterator &operator=(const AscendingIterator &other);
+        bool operator!=(const inheritanceIterator &other);
 
-            AscendingIterator &operator++();
+        bool operator>(const inheritanceIterator &other);
 
-            AscendingIterator begin();
+        bool operator<(const inheritanceIterator &other);
 
-            AscendingIterator end();
-        };
+    protected:
+        MagicalContainer *magicalContainer{};
+    };
 
-        class PrimeIterator : public inheritanceIterator {
-        public:
-            explicit PrimeIterator(MagicalContainer &container);
+    class MagicalContainer::AscendingIterator : public MagicalContainer::inheritanceIterator {
+    public:
+        explicit AscendingIterator(MagicalContainer &magicalContainer);
 
-            PrimeIterator();
+        AscendingIterator(const AscendingIterator &other);
 
-            PrimeIterator(const PrimeIterator &other);
+        AscendingIterator() = default;
 
-            ~PrimeIterator();
+        ~AscendingIterator() = default;
 
-            PrimeIterator &operator=(const PrimeIterator &other);
+        AscendingIterator(AscendingIterator &&other) noexcept = default;
 
-            PrimeIterator &operator++();
+        AscendingIterator &operator=(AscendingIterator &&other) noexcept = default;
 
-            PrimeIterator begin();
+        AscendingIterator &operator=(const AscendingIterator &other) = default;
 
-            PrimeIterator end();
-        };
+        AscendingIterator &operator++() override;
 
-        class SideCrossIterator : public inheritanceIterator {
-        public:
-            explicit SideCrossIterator(MagicalContainer &container);
+        int operator*() const override;
 
-            SideCrossIterator();
+        bool operator==(const AscendingIterator &other);
 
-            SideCrossIterator(const SideCrossIterator &other);
+        bool operator!=(const AscendingIterator &other);
 
-            ~SideCrossIterator();
+        bool operator>(const AscendingIterator &other);
 
-            SideCrossIterator &operator=(const SideCrossIterator &other);
+        bool operator<(const AscendingIterator &other);
 
-            SideCrossIterator &operator++();
+        AscendingIterator begin();
 
-            SideCrossIterator begin();
+        AscendingIterator end();
+        
+    protected:
+        std::vector<int>::iterator iterator;
+        size_t index{};
+    };
 
-            SideCrossIterator end();
-        };
+    class MagicalContainer::PrimeIterator : public MagicalContainer::inheritanceIterator {
+    public:
+        explicit PrimeIterator(MagicalContainer &magicalContainer);
+
+        PrimeIterator(const PrimeIterator &other);
+
+        PrimeIterator() = default;
+
+        ~PrimeIterator() = default;
+
+        PrimeIterator(PrimeIterator &&other) noexcept = default;
+
+        PrimeIterator &operator=(PrimeIterator &&other) noexcept = default;
+
+        PrimeIterator &operator=(const PrimeIterator &other) = default;
+
+        PrimeIterator &operator++() override;
+
+        int operator*() const override;
+
+        bool operator==(const PrimeIterator &other);
+
+        bool operator!=(const PrimeIterator &other);
+
+        bool operator>(const PrimeIterator &other);
+
+        bool operator<(const PrimeIterator &other);
+
+        PrimeIterator begin();
+
+        PrimeIterator end();
+
+    protected:
+        std::vector<int*>::iterator iterator;
+        size_t index{};
+    };
+
+    class MagicalContainer::SideCrossIterator : public MagicalContainer::inheritanceIterator {
+    public:
+        explicit SideCrossIterator(MagicalContainer &magicalContainer);
+
+        SideCrossIterator(const SideCrossIterator &other);
+
+        SideCrossIterator() = default;
+
+        ~SideCrossIterator() = default;
+
+        SideCrossIterator(SideCrossIterator &&other) noexcept = default;
+
+        SideCrossIterator &operator=(SideCrossIterator &&other) noexcept = default;
+
+        SideCrossIterator &operator=(const SideCrossIterator &other) = default;
+
+        SideCrossIterator &operator++() override;
+
+        int operator*() const override;
+
+        bool operator==(const SideCrossIterator &other);
+
+        bool operator!=(const SideCrossIterator &other);
+
+        bool operator>(const SideCrossIterator &other);
+
+        bool operator<(const SideCrossIterator &other);
+
+        SideCrossIterator begin();
+
+        SideCrossIterator end();
+
+    protected:
+        std::vector<int>::iterator iterator;
+        size_t index{}; 
     };
 }
-
 #endif //CPP_MAGICAL_ITERATORS_MAGICALCONTAINER_HPP

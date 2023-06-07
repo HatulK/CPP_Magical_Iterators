@@ -1,161 +1,202 @@
 #include "MagicalContainer.hpp"
 
 using namespace ariel;
-////MAGICAL CONTAINER
-//Constructor
-MagicalContainer::MagicalContainer() = default;
 
-//Destructor
-MagicalContainer::~MagicalContainer() = default;
+///Magical container
 
-//Copy Constructor
-MagicalContainer::MagicalContainer(const MagicalContainer &other) {
-
-}
-
-//Move constructor
-MagicalContainer::MagicalContainer(MagicalContainer &&other) {
-
-}
-
-//Add element to the container
 void MagicalContainer::addElement(int num) {
 
 }
 
-//Delete an element from the container
 void MagicalContainer::removeElement(int num) {
 
 }
 
-//Return the size of the container
 size_t MagicalContainer::size() const {
+    return ascendingContainer.size();
+}
+
+bool MagicalContainer::operator==(const MagicalContainer &other) const {
+    return ascendingContainer == other.ascendingContainer;
+}
+
+bool MagicalContainer::operator!=(const MagicalContainer &other) const {
+    return ascendingContainer != other.ascendingContainer;
+}
+
+void MagicalContainer::updateAllVectors() {
+
+}
+
+///End of magical container
+
+///Inheritance itreator
+MagicalContainer::inheritanceIterator::inheritanceIterator(MagicalContainer &magicalContainer) {
+
+}
+
+MagicalContainer::inheritanceIterator::inheritanceIterator(const MagicalContainer::inheritanceIterator &other) {
+
+}
+
+bool MagicalContainer::inheritanceIterator::operator==(const MagicalContainer::inheritanceIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::inheritanceIterator::operator!=(const MagicalContainer::inheritanceIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::inheritanceIterator::operator>(const MagicalContainer::inheritanceIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::inheritanceIterator::operator<(const MagicalContainer::inheritanceIterator &other) {
+    return false;
+}
+
+
+int MagicalContainer::inheritanceIterator::operator*() const {
     return 0;
 }
 
-////ASCENDING ITERATOR
-MagicalContainer::AscendingIterator::AscendingIterator() = default;
+///End of inheritance operator
 
-MagicalContainer::AscendingIterator::~AscendingIterator() = default;
-
-MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container) {}
+///Start of ascending iterator
 
 
-MagicalContainer::AscendingIterator::AscendingIterator(const AscendingIterator &other) {
-
-}
-
-MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(const AscendingIterator &other) {
-
-    return *this;
+MagicalContainer::AscendingIterator::AscendingIterator(MagicalContainer &container) : inheritanceIterator(container) {
+    iterator = magicalContainer->ascendingContainer.begin();
 }
 
 
 MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++() {
-
     return *this;
 }
 
-MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() {
+int MagicalContainer::AscendingIterator::operator*() const {
+    return 0;
+}
 
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() {
     return *this;
 }
 
 MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() {
-
     return *this;
 }
 
-//// SideCrossIterator
-MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &container) {
+MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer::AscendingIterator &other)
+        : inheritanceIterator(other) {
 
 }
 
-MagicalContainer::SideCrossIterator::SideCrossIterator(const SideCrossIterator &other) {
+bool MagicalContainer::AscendingIterator::operator==(const MagicalContainer::AscendingIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::AscendingIterator::operator!=(const MagicalContainer::AscendingIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::AscendingIterator::operator>(const MagicalContainer::AscendingIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::AscendingIterator::operator<(const MagicalContainer::AscendingIterator &other) {
+    return false;
+}
+
+///End off ascending iterator
+
+///Start of prime iterator
+
+MagicalContainer::PrimeIterator::PrimeIterator(MagicalContainer &magicalContainer1) : inheritanceIterator(
+        magicalContainer1) {
 
 }
 
-MagicalContainer::SideCrossIterator::~SideCrossIterator() = default;
+MagicalContainer::PrimeIterator::PrimeIterator(const MagicalContainer::PrimeIterator &other)  : inheritanceIterator(other) {
 
-MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator &other) {
-
-    return *this;
-}
-
-
-MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
-
-    return *this;
-}
-
-
-MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin() {
-
-    return *this;
-}
-
-MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() {
-
-    return *this;
-}
-
-MagicalContainer::SideCrossIterator::SideCrossIterator() {
-
-}
-
-//// PrimeIterator
-MagicalContainer::PrimeIterator::PrimeIterator(MagicalContainer &container) {
-
-}
-
-MagicalContainer::PrimeIterator::PrimeIterator(const PrimeIterator &other) {
-
-}
-
-MagicalContainer::PrimeIterator::~PrimeIterator() = default;
-
-MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator=(const PrimeIterator &other) {
-
-    return *this;
 }
 
 
 MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator++() {
-
     return *this;
 }
 
-MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::begin() {
+int MagicalContainer::PrimeIterator::operator*() const {
+    return 0;
+}
 
+MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::begin() {
     return *this;
 }
 
 MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::end() {
-
     return *this;
 }
 
-MagicalContainer::PrimeIterator::PrimeIterator() {
-
-}
-
-bool MagicalContainer::inheritanceIterator::operator>(const MagicalContainer::inheritanceIterator &other) const {
+bool MagicalContainer::PrimeIterator::operator==(const MagicalContainer::PrimeIterator &other) {
     return false;
 }
 
-bool MagicalContainer::inheritanceIterator::operator<(const MagicalContainer::inheritanceIterator &other) const {
+bool MagicalContainer::PrimeIterator::operator!=(const MagicalContainer::PrimeIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::PrimeIterator::operator>(const MagicalContainer::PrimeIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::PrimeIterator::operator<(const MagicalContainer::PrimeIterator &other) {
     return false;
 }
 
 
-bool MagicalContainer::inheritanceIterator::operator!=(const MagicalContainer::inheritanceIterator &other) const {
-    return false;
+///End if prime iterator
+
+///Start of side cross iterator
+
+MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer &magicalContainer1) : inheritanceIterator(
+        magicalContainer1) {
 }
 
-int MagicalContainer::inheritanceIterator::operator*() {
+
+MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
+    return *this;
+}
+
+int MagicalContainer::SideCrossIterator::operator*() const {
     return 0;
 }
 
-bool MagicalContainer::inheritanceIterator::operator==(const MagicalContainer::inheritanceIterator &other)const {
+MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer::SideCrossIterator &other)  : inheritanceIterator(other) {
+
+}
+
+MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin() {
+    return *this;
+}
+
+MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() {
+    return *this;
+}
+
+bool MagicalContainer::SideCrossIterator::operator==(const MagicalContainer::SideCrossIterator &other) {
     return false;
 }
+
+bool MagicalContainer::SideCrossIterator::operator!=(const MagicalContainer::SideCrossIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::SideCrossIterator::operator>(const MagicalContainer::SideCrossIterator &other) {
+    return false;
+}
+
+bool MagicalContainer::SideCrossIterator::operator<(const MagicalContainer::SideCrossIterator &other) {
+    return false;
+}
+
+///End of side cross iterator
