@@ -5,14 +5,21 @@
 #ifndef CPP_MAGICAL_ITERATORS_MAGICALCONTAINER_HPP
 #define CPP_MAGICAL_ITERATORS_MAGICALCONTAINER_HPP
 
-#include <vector>
+#include <set>
 #include <algorithm>
 #include <stdexcept>
 
 namespace ariel {
+    struct Comparator {
+        bool operator() (const int* a, const int* b) const {
+            return *a < *b;
+        }
+    };
+
+
     class MagicalContainer {
-        std::vector<int> ascendingContainer;
-        std::vector<int *> primeContainer;
+        std::set<int> regularContainer; //No pointer, already sorted
+        std::set<int *,Comparator> primeContainer;
 
     public:
         void addElement(int num);
@@ -20,8 +27,6 @@ namespace ariel {
         void removeElement(int num);
 
         size_t size() const;
-
-        void updateAllVectors();
 
         //Constructor
         MagicalContainer() = default;
@@ -37,10 +42,8 @@ namespace ariel {
 
         MagicalContainer &operator=(MagicalContainer &&other) noexcept = default;
 
-        //== operator
         bool operator==(const MagicalContainer &other) const;
 
-        // != operator
         bool operator!=(const MagicalContainer &other) const;
 
         class inheritanceIterator;
@@ -50,6 +53,8 @@ namespace ariel {
         class SideCrossIterator;
 
         class PrimeIterator;
+
+        static bool isPrime(int num) ;
     };
 
     class MagicalContainer::inheritanceIterator {
@@ -71,25 +76,27 @@ namespace ariel {
 
         virtual inheritanceIterator &operator++() = 0;
 
-        virtual int operator*() const;
+        virtual int operator*() const=0;
 
-        bool operator==(const inheritanceIterator &other);
+        bool operator==(const inheritanceIterator &other) const;
 
-        bool operator!=(const inheritanceIterator &other);
+        bool operator!=(const inheritanceIterator &other) const;
 
-        bool operator>(const inheritanceIterator &other);
+        bool operator>(const inheritanceIterator &other) const;
 
-        bool operator<(const inheritanceIterator &other);
+        bool operator<(const inheritanceIterator &other) const;
 
     protected:
         MagicalContainer *magicalContainer{};
+        size_t index;
+        std::set<int>::iterator iterator;
     };
 
     class MagicalContainer::AscendingIterator : public MagicalContainer::inheritanceIterator {
     public:
         explicit AscendingIterator(MagicalContainer &magicalContainer);
 
-        AscendingIterator(const AscendingIterator &other);
+        AscendingIterator(const AscendingIterator &other) =default;
 
         AscendingIterator() = default;
 
@@ -99,34 +106,23 @@ namespace ariel {
 
         AscendingIterator &operator=(AscendingIterator &&other) noexcept = default;
 
-        AscendingIterator &operator=(const AscendingIterator &other) = default;
+        AscendingIterator &operator=(const AscendingIterator &other);
 
         AscendingIterator &operator++() override;
 
         int operator*() const override;
 
-        bool operator==(const AscendingIterator &other);
-
-        bool operator!=(const AscendingIterator &other);
-
-        bool operator>(const AscendingIterator &other);
-
-        bool operator<(const AscendingIterator &other);
-
         AscendingIterator begin();
 
         AscendingIterator end();
         
-    protected:
-        std::vector<int>::iterator iterator;
-        size_t index{};
     };
 
     class MagicalContainer::PrimeIterator : public MagicalContainer::inheritanceIterator {
     public:
         explicit PrimeIterator(MagicalContainer &magicalContainer);
 
-        PrimeIterator(const PrimeIterator &other);
+        PrimeIterator(const PrimeIterator &other) = default;
 
         PrimeIterator() = default;
 
@@ -142,28 +138,20 @@ namespace ariel {
 
         int operator*() const override;
 
-        bool operator==(const PrimeIterator &other);
-
-        bool operator!=(const PrimeIterator &other);
-
-        bool operator>(const PrimeIterator &other);
-
-        bool operator<(const PrimeIterator &other);
 
         PrimeIterator begin();
 
         PrimeIterator end();
 
     protected:
-        std::vector<int*>::iterator iterator;
-        size_t index{};
+        std::set<int*>::iterator iterator;
     };
 
     class MagicalContainer::SideCrossIterator : public MagicalContainer::inheritanceIterator {
     public:
         explicit SideCrossIterator(MagicalContainer &magicalContainer);
 
-        SideCrossIterator(const SideCrossIterator &other);
+        SideCrossIterator(const SideCrossIterator &other) =default;
 
         SideCrossIterator() = default;
 
@@ -179,21 +167,22 @@ namespace ariel {
 
         int operator*() const override;
 
-        bool operator==(const SideCrossIterator &other);
-
-        bool operator!=(const SideCrossIterator &other);
-
-        bool operator>(const SideCrossIterator &other);
-
-        bool operator<(const SideCrossIterator &other);
-
         SideCrossIterator begin();
 
         SideCrossIterator end();
 
+        bool operator==(const SideCrossIterator &other) const;
+
+        bool operator!=(const SideCrossIterator &other) const;
+
+        bool operator>(const SideCrossIterator &other) const;
+
+        bool operator<(const SideCrossIterator &other) const;
+
     protected:
-        std::vector<int>::iterator iterator;
-        size_t index{}; 
+        std::set<int>::iterator endIterator;
+        bool startOrEnd = true; // Start = true,  End = false;
+        int countOfJumps = 1;
     };
 }
 #endif //CPP_MAGICAL_ITERATORS_MAGICALCONTAINER_HPP
