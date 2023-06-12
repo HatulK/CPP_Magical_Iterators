@@ -42,6 +42,8 @@ namespace ariel {
 
         MagicalContainer &operator=(MagicalContainer &&other) noexcept = default;
 
+        MagicalContainer &operator=(const MagicalContainer &other)= default;
+
         bool operator==(const MagicalContainer &other) const;
 
         bool operator!=(const MagicalContainer &other) const;
@@ -64,19 +66,21 @@ namespace ariel {
 
         inheritanceIterator(const inheritanceIterator &other);
 
-        inheritanceIterator() = default;
+        size_t getIndex() const;
 
-        ~inheritanceIterator() = default;
+        inheritanceIterator();
 
-        inheritanceIterator(inheritanceIterator &&other) noexcept = default;
+        ~inheritanceIterator();
 
-        inheritanceIterator &operator=(inheritanceIterator &&other) noexcept = default;
+        inheritanceIterator(inheritanceIterator &&other) noexcept ;
 
-        inheritanceIterator &operator=(const inheritanceIterator &other) = default;
+        inheritanceIterator &operator=(inheritanceIterator &&other) noexcept ;
+
+        inheritanceIterator &operator=(const inheritanceIterator &other);
 
         virtual inheritanceIterator &operator++() = 0;
 
-        virtual int operator*() const=0;
+        virtual int operator*() =0;
 
         bool operator==(const inheritanceIterator &other) const;
 
@@ -87,7 +91,7 @@ namespace ariel {
         bool operator<(const inheritanceIterator &other) const;
 
     protected:
-        MagicalContainer *magicalContainer{};
+        MagicalContainer magicalContainer;
         size_t index;
         std::set<int>::iterator iterator;
     };
@@ -110,7 +114,7 @@ namespace ariel {
 
         AscendingIterator &operator++() override;
 
-        int operator*() const override;
+        int operator*()  override;
 
         AscendingIterator begin();
 
@@ -132,11 +136,11 @@ namespace ariel {
 
         PrimeIterator &operator=(PrimeIterator &&other) noexcept = default;
 
-        PrimeIterator &operator=(const PrimeIterator &other) = default;
+        PrimeIterator &operator=(const PrimeIterator &other);
 
         PrimeIterator &operator++() override;
 
-        int operator*() const override;
+        int operator*() override;
 
 
         PrimeIterator begin();
@@ -151,7 +155,7 @@ namespace ariel {
     public:
         explicit SideCrossIterator(MagicalContainer &magicalContainer);
 
-        SideCrossIterator(const SideCrossIterator &other) =default;
+        SideCrossIterator(const SideCrossIterator &other);
 
         SideCrossIterator() = default;
 
@@ -161,11 +165,11 @@ namespace ariel {
 
         SideCrossIterator &operator=(SideCrossIterator &&other) noexcept = default;
 
-        SideCrossIterator &operator=(const SideCrossIterator &other) = default;
+        SideCrossIterator &operator=(const SideCrossIterator &other);
 
         SideCrossIterator &operator++() override;
 
-        int operator*() const override;
+        int operator*() override;
 
         SideCrossIterator begin();
 
